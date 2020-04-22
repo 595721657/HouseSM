@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dragon.dao.users.UsersDao">
+   <!-- 验证登录的方法 -->
+   <select id="isValidation" resultType="int">
+      SELECT count(1) FROM users
+      <where>
+        <if test="id !=null">
+         and cardid=#{id}
+        </if>
+        <if test="psw !=null">
+         and password=#{psw}
+        </if>
+      </where>
+   </select>
+   <!-- 注册的方法 -->
+   <insert id="addUsers" parameterType="Users">
+   INSERT INTO users(cardid,`name`,gender,createtime,`password`)
+   VALUES(#{cardid},#{name},#{gender},#{createtime},#{password})
+   </insert>
+   <!-- 通过身份证查询用户信息 -->
+   <select id="getByCarId" resultType="Users">
+   SELECT * FROM users 
+   <where>
+     <if test="id !=null">
+      and cardid=#{id}
+     </if>
+   </where>
+   </select>
+</mapper>
